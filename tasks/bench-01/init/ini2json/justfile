@@ -1,0 +1,21 @@
+build_dir := "build"
+
+set positional-arguments
+
+default:
+  @just --list
+
+configure:
+  cmake -S . -B {{build_dir}} -G Ninja -DCMAKE_CXX_COMPILER="$(command -v clang++)" -DCMAKE_C_COMPILER="$(command -v clang)"
+
+build: configure
+  cmake --build {{build_dir}}
+
+run input: build
+  ./{{build_dir}}/src/ini2json {{input}}
+
+clean:
+  rm -rf {{build_dir}}
+
+fclean: clean
+  rm -rf test_files
