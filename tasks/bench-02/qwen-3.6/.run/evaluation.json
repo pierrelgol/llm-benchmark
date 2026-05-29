@@ -1,0 +1,37 @@
+{
+  "candidate_path": "/home/pollivie/workspace-benchmark/llm-benchmark/tasks/bench-02/qwen-3.6/document.md",
+  "evaluation": {
+    "missing_or_incorrect": [
+      "Public API proposal is not well aligned with libgit2 conventions or the reference: it uses `git_sparsecheckout_*` naming, split init/update APIs, and `bool` fields instead of the expected versioned `git_sparse_checkout_*` style with mode enum and checkout options embedding.",
+      "Incorrectly concludes that existing pathspec machinery is sufficient for non-cone sparse-checkout patterns; the reference expects ordered, negation-sensitive, gitignore-like semantics that may require a dedicated matcher.",
+      "Cone-mode guidance is oversimplified and likely inaccurate; translating patterns like `foo/` to `foo/**` does not fully capture Git cone-mode behavior.",
+      "Checkout integration guidance is weaker than the reference: it proposes pathspec-driven two-phase checkout/remove behavior instead of clearly centering reuse of checkout action computation as the primary orchestration point.",
+      "Conflict handling is inconsistent: it says conflicted excluded paths should still have SKIP_WORKTREE set, then recommends skipping conflict entries during recalculation. The reference clearly expects preserving non-stage-0 entries without collapsing them.",
+      "Status/diff section is less precise than the reference and suggests `status.c` changes without establishing whether existing diff-based behavior is already sufficient.",
+      "Header/file naming deviates from the expected `sparse_checkout` naming (`include/git2/sparse_checkout.h`, `src/libgit2/sparse_checkout.c`).",
+      "Some recommendations add extra public surface (`enabled`, `path_included`) not motivated by the prompt or reference, while omitting the tighter `set` / `disable` / `list` shape from the reference."
+    ],
+    "notable_strengths": [
+      "Covers the major implementation areas requested by the prompt: config, sparse-checkout file management, index flag recalculation, checkout/workdir updates, edge cases, and tests.",
+      "Includes many concrete file and line references across index, checkout, config cache, pathspec, ignore, and diff code.",
+      "Correctly identifies existing SKIP_WORKTREE support in index persistence and diff generation as building blocks rather than a complete implementation.",
+      "Explicitly calls out full-index scope and avoids proposing sparse-index support.",
+      "Provides a useful phased implementation sequence and a focused test plan under `tests/libgit2`."
+    ],
+    "scores": {
+      "coverage": 8,
+      "instruction_following": 8,
+      "overall": 6,
+      "reference_alignment": 5,
+      "technical_precision": 5
+    },
+    "summary": "The candidate is structured, concrete, and covers most required areas, but it departs from the expected guidance in several important technical points. The biggest issues are an API shape that does not follow the reference/libgit2 conventions closely, overstating the suitability of existing pathspec matching for sparse-checkout semantics, and some inaccurate or risky implementation advice around checkout and conflicts.",
+    "verdict": "borderline"
+  },
+  "grader_exit_code": 0,
+  "model": "openai/gpt-5.4",
+  "opencode_stderr_path": "/home/pollivie/workspace-benchmark/llm-benchmark/tasks/bench-02/qwen-3.6/.run/evaluation.json.opencode.stderr",
+  "opencode_stdout_path": "/home/pollivie/workspace-benchmark/llm-benchmark/tasks/bench-02/qwen-3.6/.run/evaluation.json.opencode.jsonl",
+  "prompt_path": "/home/pollivie/workspace-benchmark/llm-benchmark/tasks/bench-02/qwen-3.6/prompt.md",
+  "reference_path": "/home/pollivie/workspace-benchmark/llm-benchmark/tasks/bench-02/tester/document.md"
+}
